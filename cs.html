@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>3D CS Tarzı Oyun</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+<script>
+// === TEMEL SAHNE ===
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x202020);
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// === IŞIK ===
+scene.add(new THREE.AmbientLight(0x404040));
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(10, 20, 10);
+scene.add(light);
+
+// === ZEMİN ve DUVARLAR ===
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(200, 200),
+  new THREE.MeshStandardMaterial({ color: 0x333333 })
+);
+floor.rotation.x = -Math.PI / 2;
+scene.add(floor);
+
+const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x666666 });
+function createWall(x, z, w = 10, h = 5) {
+  const wall = new THREE.Mesh(new THREE.BoxGeometry(w, h, 1), wallMaterial);
+  wall.position.set(x, h / 2, z);
+  scene.add(wall);
+  return wall;
+}
+createWall(0, -50); createWall(0, 50);
+createWall(-50, 0, 1, 10); createWall(50, 0, 1, 10);
+
+// === OYUNCU ===
+const player = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 2, 1),
+  new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+);
+player.position.set(0, 1, 0);
+scene.add(player);
+let playerHealth = 100;
+
+// === KAMERA TAKİP ===
+let yaw = 0;
+function updateCamera() {
+  const offset = new THREE.Vector3(0, 5, -10).applyAxisAngle(new THREE.Vector3(0,1,0), yaw);
+  camera.position.copy(player.position.clone().add(offset));
+  camera.lookAt(player.position);
+}
+
+// === KONTROLLER ===
+const keys = {}, bullets = [], enemies = [];
+let isMouseDown = false, selectedWeapon = 1;
+window.addEventListener('keydown', e => {
+  keys[e.key.toLowerCase()] = true;
+  if (e.key === '1') selectedWeapon = 1;
+  if (e.key === '2') selectedWeapon = 2;
+});
+window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+document.addEventListener('mousedown', () => isMouseDown = true);
+document.addEventListener('mouseup', () => isMouseDown = false);
+
+document.body.onclick = () => document.body.requestPointerLock();
+document.addEventListener('pointerlockchange', () => {
+  if (document.pointerLockElement === document.body) {
+    document.addEventListener("mousemove", onMouseMove, false);
+  } else {
+    document.removeEventListener("mousemove", onMouseMove, false);
+  }
+});
+
+function onMouseMove(e) {
+  yaw -= e.movementX * 0.002;
+}
+
+function shootBullet(from, dir) {
+  const geometry = new THREE.SphereGeometry(0.1, 8, 8);
+  const color = selectedWeapon === 1 ? 0xffff00 : 0x00ffff;
+  const material = new THREE.MeshBasicMaterial({ color });
+  const bullet = new THREE.Mesh(geometry, material);
+  bullet.position.copy(from);
+  bullet.dir = dir.clone();
+  bullet.speed = selectedWeapon === 1 ? 1.2 : 0.6;
+  bullet.damage = selectedWeapon === 1 ? 30 : 10;
+  scene.add(bullet);
+  bullets.push(bullet);
+}
+
+function spawnEnemy(x, z) {
+  const enemy = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 2, 1),
+    new THREE.MeshStandardMaterial({ color: 0xff0000 })
+  );
+  enemy.position.set(x, 1, z);
+  enemy.health = 100;
+  scene.add(enemy);
+  enemies.push(enemy);
+}
+spawnEnemy(-10, -10);
+spawnEnemy(20, 20);
+
+let shootCooldown = 0;
+function animate() {
+  requestAnimationFrame(animate);
+
+  const speed = 0.2;
+  const forward = new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw));
+  const left = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+
+  if (keys['w']) player.position.addScaledVector(forward, speed);
+  if (keys['s']) player.position.addScaledVector(forward, -speed);
+  if (keys['a']) player.position.addScaledVector(left, speed);
+  if (keys['d']) player.position.addScaledVector(left, -speed);
+
+  if (isMouseDown && shootCooldown <= 0 && document.pointerLockElement === document.body) {
+    shootBullet(player.position.clone(), forward);
+    shootCooldown = selectedWeapon === 1 ? 15 : 5;
+  } else {
+    shootCooldown--;
+  }
+
+  bullets.forEach((b, i) => {
+    b.position.addScaledVector(b.dir, b.speed);
+    enemies.forEach((enemy, j) => {
+      if (b.position.distanceTo(enemy.position) < 1) {
+        enemy.health -= b.damage;
+        if (enemy.health <= 0) {
+          scene.remove(enemy);
+          enemies.splice(j, 1);
+        }
+        scene.remove(b);
+        bullets.splice(i, 1);
+      }
+    });
+    if (b.position.length() > 200 && bullets.includes(b)) {
+      scene.remove(b);
+      bullets.splice(i, 1);
+    }
+  });
+
+  enemies.forEach(enemy => {
+    const dir = new THREE.Vector3().subVectors(player.position, enemy.position).normalize();
+    enemy.position.addScaledVector(dir, 0.03);
+    if (enemy.position.distanceTo(player.position) < 1) {
+      playerHealth -= 0.3;
+      if (playerHealth <= 0) alert("Öldün!");
+    }
+  });
+
+  updateCamera();
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>

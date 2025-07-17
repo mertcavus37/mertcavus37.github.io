@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Buton</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: #111;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: top 0.1s, left 0.1s;
+      box-shadow: 0 0 15px rgba(233, 30, 99, 0.7);
+      user-select: none;
+      outline: none;
+      z-index: 10;
+    }
+
+    #uyari {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ff1744;
+      font-size: 28px;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 15px 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #ff1744;
+      display: none;
+      animation: pulse 1s infinite alternate;
+      z-index: 9999;
+      user-select: none;
+      pointer-events: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    @keyframes pulse {
+      0% {
+        text-shadow: 0 0 10px #ff1744, 0 0 20px #ff1744;
+        transform: translateX(-50%) scale(1);
+      }
+      100% {
+        text-shadow: 0 0 25px #ff1744, 0 0 40px #ff1744;
+        transform: translateX(-50%) scale(1.1);
+      }
+    }
+
+    #stopButton {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 10000;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <button id="button" tabindex="-1" onfocus="this.blur()">Kayıt olmak için tıklayınız.</button>
+  <button id="stopButton">Durdur</button>
+  <div id="uyari"></div>
+
+  <script>
+    const button = document.getElementById('button');
+    const uyari = document.getElementById('uyari');
+    const stopButton = document.getElementById('stopButton');
+    const dangerZone = 150;
+    const speedMultiplier = 1.5;
+    const minMargin = 20;
+    const minWidth = 400;
+    const minHeight = 300;
+    let durduruldu = false;
+
+    function getRandomPosition(width, height) {
+      const maxX = window.innerWidth - width - minMargin;
+      const maxY = window.innerHeight - height - minMargin;
+      return {
+        x: Math.floor(Math.random() * (maxX - minMargin)) + minMargin,
+        y: Math.floor(Math.random() * (maxY - minMargin)) + minMargin
+      };
+    }
+
+    function checkWindowSize() {
+      if (durduruldu) return;
+      if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
+        uyari.innerText = `Pencere çok küçük! En az ${minWidth}x${minHeight} kullan.`;
+        uyari.style.display = "block";
+      } else {
+        if (uyari.innerText.startsWith("Pencere çok küçük")) {
+          uyari.style.display = "none";
+          uyari.innerText = "";
+        }
+      }
+    }
+
+    function hareketKontrol(e) {
+      if (durduruldu) return;
+      const rect = button.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      const btnCenterX = rect.left + rect.width / 2;
+      const btnCenterY = rect.top + rect.height / 2;
+
+      const dx = mouseX - btnCenterX;
+      const dy = mouseY - btnCenterY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < dangerZone) {
+        const angle = Math.atan2(dy, dx);
+        const moveX = -Math.cos(angle) * dangerZone * speedMultiplier;
+        const moveY = -Math.sin(angle) * dangerZone * speedMultiplier;
+
+        let newLeft = rect.left + moveX;
+        let newTop = rect.top + moveY;
+
+        const maxLeft = window.innerWidth - rect.width - minMargin;
+        const maxTop = window.innerHeight - rect.height - minMargin;
+
+        newLeft = Math.min(Math.max(newLeft, minMargin), maxLeft);
+        newTop = Math.min(Math.max(newTop, minMargin), maxTop);
+
+        if (newLeft <= minMargin || newLeft >= maxLeft || newTop <= minMargin || newTop >= maxTop) {
+          const randomPos = getRandomPosition(rect.width, rect.height);
+          newLeft = randomPos.x;
+          newTop = randomPos.y;
+        }
+
+        button.style.left = `${newLeft}px`;
+        button.style.top = `${newTop}px`;
+      }
+    }
+
+    document.addEventListener('mousemove', hareketKontrol);
+
+    button.addEventListener('click', function () {
+      if (durduruldu) return;
+      uyari.innerText = "Bravo tıkladınız. fakat kayıt olamazsınız.";
+      uyari.style.display = "block";
+      setTimeout(() => {
+        uyari.style.display = "none";
+        uyari.innerText = "";
+      }, 3000);
+    });
+
+    button.addEventListener('focus', e => {
+      e.target.blur();
+    });
+
+    document.addEventListener('contextmenu', function (e) {
+      if (durduruldu) return;
+      e.preventDefault();
+      uyari.innerText = "Sağ tık mı?  Yemezler.";
+      uyari.style.display = "block";
+      setTimeout(() => {
+        uyari.style.display = "none";
+        uyari.innerText = "";
+      }, 3000);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (durduruldu) return;
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+        (e.ctrlKey && e.key === "U")
+      ) {
+        e.preventDefault();
+        uyari.innerText = "Kodlara mı bakıyorsun sen 😏";
+        uyari.style.display = "block";
+        setTimeout(() => {
+          uyari.style.display = "none";
+          uyari.innerText = "";
+        }, 3000);
+      }
+    });
+
+    setInterval(() => {
+      if (durduruldu) return;
+      const start = performance.now();
+      debugger;
+      const end = performance.now();
+      if (end - start > 100) {
+        alert('DevTools açık! Sayfa korunuyor.');
+        window.location.reload();
+      }
+    }, 1000);
+
+    window.addEventListener('resize', checkWindowSize);
+    window.addEventListener('load', () => {
+      openFullscreen();
+      checkWindowSize();
+    });
+
+    function openFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+
+    stopButton.addEventListener("click", () => {
+      durduruldu = true;
+      uyari.innerText = "Buton donduruldu. Artık kaçamayacak.";
+      uyari.style.display = "block";
+    });
+  </script>
+</body>
+</html>

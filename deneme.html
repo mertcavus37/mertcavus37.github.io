@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Alevli Arka Plan</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      background-image: url('web sitesi/alev.png'); /* İlk (az alevli) görsel */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 1s ease-in-out;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  let changed = false;
+
+  function changeBackground() {
+    if (!changed) {
+      document.body.style.backgroundImage = "url('web sitesi/ateş 2.avif')";
+    } else {
+      document.body.style.backgroundImage = "url('web sitesi/alev.png')";
+    }
+    changed = !changed; // Durumu tersine çevir
+  }
+</script>
+
+</body>
+</html>

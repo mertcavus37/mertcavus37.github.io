@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Top Hızlanınca Raket Hızlansın</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+      background: #111;
+    }
+    #score {
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 24px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="800" height="500"></canvas>
+  <div id="score">Sen: 0 | Bot: 0</div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const paddleHeight = 100;
+    const paddleWidth = 10;
+    const ballSize = 15;
+
+    let playerY = canvas.height / 2 - paddleHeight / 2;
+    let botY = playerY;
+    let upPressed = false;
+    let downPressed = false;
+
+    let playerScore = 0;
+    let botScore = 0;
+
+    let ballX = canvas.width / 2;
+    let ballY = canvas.height / 2;
+    let ballSpeedX = -5;
+    let ballSpeedY = 3;
+
+    function drawRect(x, y, w, h, color = "white") {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+    }
+
+    function draw() {
+      ctx.fillStyle = "#111";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      drawRect(20, playerY, paddleWidth, paddleHeight);
+      drawRect(canvas.width - 30, botY, paddleWidth, paddleHeight);
+      drawRect(ballX, ballY, ballSize, ballSize);
+
+      document.getElementById("score").innerText = `Sen: ${playerScore} | Bot: ${botScore}`;
+    }
+
+    function update() {
+      // Topun hızına göre raket hızı ayarı
+      let baseSpeed = 6;
+      // Topun mutlak hızını al (hem X hem Y)
+      const ballSpeedMagnitude = Math.sqrt(ballSpeedX * ballSpeedX + ballSpeedY * ballSpeedY);
+      // Raket hızı topun hızına bağlı olarak 6'dan 15'e kadar çıkabilir
+      const playerPaddleSpeed = Math.min(15, baseSpeed + ballSpeedMagnitude);
+
+      if (upPressed && playerY > 0) playerY -= playerPaddleSpeed;
+      if (downPressed && playerY < canvas.height - paddleHeight) playerY += playerPaddleSpeed;
+
+      if (botY + paddleHeight / 2 < ballY) botY += 4;
+      else if (botY + paddleHeight / 2 > ballY) botY -= 4;
+
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
+
+      if (ballY <= 0 || ballY + ballSize >= canvas.height) {
+        ballSpeedY *= -1;
+      }
+
+      if (
+        ballX + ballSize >= canvas.width - 30 &&
+        ballY + ballSize >= botY &&
+        ballY <= botY + paddleHeight
+      ) {
+        ballX = canvas.width - 30 - ballSize;
+        ballSpeedX = -Math.abs(ballSpeedX);
+      }
+
+      // SENİN RAKETİNE ÇARPTIĞINDA MUTLAKA GOL YİYORSUN
+      if (
+        ballX <= 30 &&
+        ballY + ballSize >= playerY &&
+        ballY <= playerY + paddleHeight
+      ) {
+        ballSpeedX = Math.abs(ballSpeedX) + 5; // hız artar ve hep kalene doğru gider
+        ballSpeedY = (Math.random() - 0.5) * 10;
+      }
+
+      if (ballX > canvas.width) {
+        playerScore++;
+        resetBall(false);
+      } else if (ballX < 0) {
+        botScore++;
+        resetBall(true);
+      }
+    }
+
+    function resetBall(towardsPlayer) {
+      ballX = canvas.width / 2;
+      ballY = canvas.height / 2;
+      ballSpeedX = towardsPlayer ? -5 : 5;
+      ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * (2 + Math.random() * 3);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp") upPressed = true;
+      if (e.key === "ArrowDown") downPressed = true;
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "ArrowUp") upPressed = false;
+      if (e.key === "ArrowDown") downPressed = false;
+    });
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>
