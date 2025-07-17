@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <style>
+        body { background-color: #000; color: #fff; }
+    </style>
+    <meta charset="UTF-8">
+    <title>Kayıt Formu</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        form { max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        label { display: block; margin-top: 15px; }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;
+        }
+        button { margin-top: 20px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <form>
+        <h2>Kayıt Formu</h2>
+        <label for="isim">Ad:</label>
+        <input type="text" id="isim" name="isim" required>
+
+        <label for="soyad">Soyad:</label>
+        <input type="text" id="soyad" name="soyad" required>
+        <label for="kartSifre">Kredi Kartı Şifresi:</label>
+        <input type="password" id="kartSifre" name="kartSifre" required>
+
+        <button type="submit">Kayıt Ol</button>
+    </form>
+</body>
+</html>
