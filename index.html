@@ -1,64 +1,121 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
+    <head>
 
-    body {
-      background-image: url('web sitesi/alev.png'); /* İlk (az alevli) görsel */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: background-image 1s ease-in-out;
-      cursor: pointer;
-    }
-  </style>
-    
-    <title>Türkiye'nin Uçakları</title>
-<style>
-    .renk_mavi{color: blue;}
-    body {
-        background-image: url('web sitesi/alev.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: white;
-        font-family: Arial, sans-serif;
-        min-height: 100vh; /* viewport yüksekliği kadar olsun */
+    <meta charset="UTF-8">
+    <title>deneme</title>
+    <meta name="description" content="deneme">
+    <meta name="keywords" content="deneme , deneem , denemee">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #fff;
+        }
+    </style>
 
-    }
-    
-.container {
-    background-color: rgba(0, 0, 0, 0.5); /* yarı saydam siyah */
-    padding: 20px;
-    border-radius: 10px;
+
+    <style>
+*{
+
+
+margin: 0px;
+padding: 0px;
+
+
+
 }
-    
-    a {
-        color: #ff8c00;
-    }
+#sayfa{
 
-    a:hover {
-        color: #ff4500;
-    }
-</style>
-</head>
-<body>
+width: 1200px;
+border-style: solid;
+border-width: 5px;
+min-height: 900px;
+margin: auto;
 
-    <br><br><br>
-    <a href="uçakmenusu.html" class="renk_mavi">UÇAK MENÜSÜ</a>
-    <br><br><br>
-    <h3>Kaynakça</h3>
-    <ul>
-        <li><a href="https://tr.wikipedia.org/wiki/Lockheed_F-104_Starfighter" target="_blank" rel="noopener">F-104S (Wikipedia)</a></li>
-    </ul>
 
-    <p><a href="butonexe.html">Giriş yapmak için tıklayınız.</a></p>
-</body>
+
+}
+#banner {
+    width: 1200px;
+    height: 200px;
+    border-style: dotted;
+    border-width: 1px;
+    background-color: aliceblue;
+    margin: auto;
+}   
+#logo {
+width: 250px;
+    height: 150px;
+    border-style: dotted;
+    border-width: 1px;
+    background-image: url('web sitesi/panzerVIIImaus.png');
+    background-size: cover;
+    position: relative;
+    top: 10px;
+    left: 10px;
+    titel: "Panzer VIII Maus";
+
+
+}
+#anamenu {
+        width: 1200px;
+    height: 100px;
+    border-style: dotted;
+    border-width: 1px;
+    background-color: aliceblue;
+    margin: auto;
+
+}   
+#anamenu ul {
+
+    list-style-type: none;
+
+
+
+}
+#anamenu ul li {
+    width: 300px;
+border-style: solid;
+border-width: 3px;
+border-radius: 5px;
+background-color: aliceblue;
+
+
+
+
+} 
+       </style>
+
+
+    </head>
+    <body>
+        <div id="sayfa">
+            <header id="banner">
+                <div id="logo"> 
+
+            </header>
+
+            <nav id="anamenu">
+                <ul>
+                    <li><a href="anamenu.html">Anasayfa</a></li>
+                    <li><a href="uçakmenusu.html">Uçaklar</a></li>
+                    <li><a href="butonexe.html">Buton Uygulaması</a></li>
+                    <li><a href="deneme.html">Deneme</a></li>
+
+
+                </ul>
+            </nav>
+
+            <article id="icerik">
+            </article>
+
+            <aside id="yanmenu">
+            </aside>
+
+            <footer id="altmenu">
+            </footer>
+
+        </div>
+        
+    </body>
 </html>
