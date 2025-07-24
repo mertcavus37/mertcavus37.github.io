@@ -6,9 +6,9 @@ padding: 0px;
 }
 body
 {
-    background-image: url("web sitesi/maus.png");
+    /* background-image: url("web sitesi/maus.png"); */
     font-family: Arial, sans-serif;
-    color: #333;
+    color: #CCC;
 background-size: cover;
     background-position-x: center;
     background-repeat: no-repeat;
@@ -16,4 +16,12 @@ background-size: cover;
     background-color: black;
     height: 100vh;
     margin: 20px;
+}
+
+a{
+    color:red;
+}
+
+li {
+    margin-top: 10px;
 }

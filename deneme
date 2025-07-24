@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Basit Profil Sistemi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    .menu, .form, .profile {
+      display: none;
+      padding: 20px;
+    }
+    .active {
+      display: block;
+    }
+    nav {
+      background: #333;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+    }
+    nav button {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+    input {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <button onclick="showPage('menu')">Ana Menü</button>
+  <button onclick="showPage('form')">Form</button>
+  <button onclick="showPage('profile')">Profil</button>
+</nav>
+
+<div class="container">
+  <div id="menu" class="menu active">
+    <h2>Hoş Geldin!</h2>
+    <p>Bu sayfada form doldurup profilini görebilirsin. Ancak sayfa yenilenirse bilgiler kaybolur.</p>
+  </div>
+
+  <div id="form" class="form">
+    <h2>Bilgilerini Gir</h2>
+    <input type="text" id="name" placeholder="Adın">
+    <input type="text" id="age" placeholder="Yaşın">
+    <input type="text" id="hobby" placeholder="Hobilerin">
+    <button onclick="saveProfile()">Kaydet</button>
+  </div>
+
+  <div id="profile" class="profile">
+    <h2>Profil</h2>
+    <p><strong>Ad:</strong> <span id="p_name">-</span></p>
+    <p><strong>Yaş:</strong> <span id="p_age">-</span></p>
+    <p><strong>Hobiler:</strong> <span id="p_hobby">-</span></p>
+  </div>
+</div>
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.menu, .form, .profile').forEach(el => {
+      el.classList.remove('active');
+    });
+    document.getElementById(page).classList.add('active');
+  }
+
+  function saveProfile() {
+    const name = document.getElementById("name").value || "-";
+    const age = document.getElementById("age").value || "-";
+    const hobby = document.getElementById("hobby").value || "-";
+
+    document.getElementById("p_name").textContent = name;
+    document.getElementById("p_age").textContent = age;
+    document.getElementById("p_hobby").textContent = hobby;
+
+    showPage('profile');
+  }
+</script>
+
+</body>
+</html>
