@@ -1,134 +1,176 @@
 <!DOCTYPE html>
 <html lang="tr">
-    <head>
-        <link rel="icon" type="image/png" href="web sitesi/weblogo2.png">
+
+<head>
+    <link rel="icon" type="image/png" href="web sitesi/weblogo2.png">
 
     <meta charset="UTF-8">
     <title>MERT Ç.</title>
     <meta name="description" content="deneme">
     <meta name="keywords" content="deneme , deneem , denemee">
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+    .renk_mavi{color:brown;}
+    body {
+        background-image: url('web sitesi/alev.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        font-family: Arial, sans-serif;
+        min-height: 100vh; /* viewport yüksekliği kadar olsun */
+
+    }
+    
+.container {
+    background-color: rgba(0, 0, 0, 0.5); /* yarı saydam siyah */
+    padding: 20px;
+    border-radius: 10px;
+}
+    
+    a {
+        color: #ff8c00;
+    }
+
+    a:hover {
+        color: #ff4500;
+    }
+</style>
+
     <style>
         body {
             background-color: black;
         }
 
-*{
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
 
+        #sayfa {
 
-margin: 0px;
-padding: 0px;
-
-
-
-}
-#sayfa{
-
-width: 100%;
-border-style: solid;
-border-width: 5px;
-min-height: 900px;
-margin: auto;
+            width: 100%;
+            border-style: solid;
+            border-width: 5px;
+            min-height: 900px;
+            margin: auto;
 
 
 
-}
-#banner {
-    width: 100%;
-    height: 200px;
-    border-style: dotted;
-    border-width: 1px;
+        }
 
-    margin: auto;
-}   
-#logo {
-width: 250px;
-    height: 150px;
-    border-style: dotted;
-    border-width: 1px;
-    
-    background-image: url('web sitesi/panzerVIIImaus.png');
-    background-size: cover;
-    position: relative;
-    top: 10px;
-    left: 10px;
-    title: "Panzer VIII Maus";
+        #banner {
+            width: 100%;
+            height: 200px;
+            border-style: dotted;
+            border-width: 1px;
+            margin: auto;
+        }
 
+        #logo {
+            width: 250px;
+            height: 150px;
+            border-style: dotted;
+            border-width: 1px;
 
-}
-#anamenu {
-        width: 100%;
-    border-style: dotted;
-    border-width: 1px;
-    margin: auto;
+            background-image: url('web sitesi/panzerVIIImaus.png');
+            background-size: cover;
+            position: relative;
+            top: 10px;
+            left: 10px;
+            title: "Panzer VIII Maus";
 
-}   
-#anamenu ul {
+        }
 
-    list-style-type: none;
+        #anamenu {
+            width: 100%;
+            border-style: dotted;
+            border-width: 1px;
+            margin: auto;
 
+        }
 
+        #anamenu ul {
 
-}
-#anamenu ul li {
-width: 24%;
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 5px;
-    background-color: #025d12;
-    float: left;
-    text-align: center;
-} 
-#anamenu ul li a {
-
-    color: beige;
-}
-       </style>
+            list-style-type: none;
 
 
-    </head>
-    <body>
-        <div id="sayfa">
-            <div id="header">
-                <script lang="javascript">
-                    
-                </script>
-            </div>
-            <div id="icerik">
-                    
-                <h1>Hoş Geldiniz!</h1>
-                <ul>
+
+        }
+
+        #anamenu ul li {
+            width: 24%;
+            border-style: solid;
+            border-width: 3px;
+            border-radius: 5px;
+            background-color: #025d12;
+            float: left;
+            text-align: center;
+        }
+
+        #anamenu ul li a {
+
+            color: beige;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="sayfa">
+        <header id="banner">
+            <div id="logo">
+
+        </header>
+
+        <nav id="anamenu">
+            <ul>
+                <li><a href="anamenu.html">Anasayfa</a></li>
+                <li><a href="ucakmenusu.html">Uçaklar</a></li>
+                <li><a href="butonexe.html">Buton Uygulaması</a></li>
+                <li><a href="profil.html">Profil</a></li>
+
+
+            </ul>
+        </nav>
+        <div id="icerik">
+
+            <h1>Hoş Geldiniz!</h1>
+            <ul>
                 <li>
-                <p>Bu web sitesi, Türkiye'nin uçakları ve diğer ilginç konular hakkında bilgi edinmenizi sağlar.</p>
+                    <p>Bu web sitesi, Türkiye'nin uçakları ve diğer ilginç konular hakkında bilgi edinmenizi sağlar.</p>
                 </li>
                 <li>
-                <p>Uçak menüsüne giderek daha fazla bilgi alabilirsiniz.</p>
+                    <p>Uçak menüsüne giderek daha fazla bilgi alabilirsiniz.</p>
                 </li>
                 <li>
-                <p>Buton uygulamasını deneyerek etkileşimli bir deneyim yaşayabilirsiniz.</p>
+                    <p>Buton uygulamasını deneyerek etkileşimli bir deneyim yaşayabilirsiniz.</p>
                 </li>
                 <li>
-                <p>Deneme sayfasında basit bir profil sistemi bulunmaktadır.</p>
+                    <p>Deneme sayfasında basit bir profil sistemi bulunmaktadır.</p>
                 </li>
                 <li>
-                <p>Bu sayfada gezinerek daha fazla bilgi edinebilirsiniz.</p>
+                    <p>Bu sayfada gezinerek daha fazla bilgi edinebilirsiniz.</p>
                 </li>
                 <li>
-                <p>Web sitemizi ziyaret ettiğiniz için teşekkür ederiz!</p>
+                    <p>Web sitemizi ziyaret ettiğiniz için teşekkür ederiz!</p>
                 </li>
-                </ul>
-            </div>
-           
-            <!-- <article id="icerik">
+            </ul>
+        </div>
+
+        <!-- <article id="icerik">
             </article> -->
 
-            <aside id="yanmenu">
-            </aside>
+        <aside id="yanmenu">
+        </aside>
 
-            <footer id="altmenu">
-            </footer>
+        <footer id="altmenu">
+        </footer>
 
-        </div>
-        
-    </body>
+    </div>
+
+</body>
+
 </html>
