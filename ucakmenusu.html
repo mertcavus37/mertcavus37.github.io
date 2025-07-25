@@ -6,26 +6,158 @@
     <title>Türkiye'nin Uçakları</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+     <style>
+        .renk_mavi {
+            color: brown;
+        }
+
+        body {
+            background-image: url('web sitesi/alev.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            /* viewport yüksekliği kadar olsun */
+
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.5);
+            /* yarı saydam siyah */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        a {
+            color: #ff8c00;
+        }
+
+        a:hover {
+            color: #ff4500;
+        }
+        div#icerik {
+    padding: 20px;
+}
+
+        body {
+            background-color: black;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #sayfa {
+
+            width: 100%;
+            border-style: solid;
+            border-width: 5px;
+            min-height: 900px;
+            margin: auto;
+
+
+
+        }
+
+        #banner {
+            width: 100%;
+            height: 200px;
+            border-style: dotted;
+            border-width: 1px;
+            margin: auto;
+        }
+
+        #logo {
+            width: 250px;
+            height: 150px;
+            border-style: dotted;
+            border-width: 1px;
+
+            background-image: url('web sitesi/panzerVIIImaus.png');
+            background-size: cover;
+            position: relative;
+            top: 10px;
+            left: 10px;
+            title: "Panzer VIII Maus";
+
+        }
+
+        #anamenu {
+            width: 100%;
+            border-style: dotted;
+            border-width: 1px;
+            margin: auto;
+
+        }
+
+        #anamenu ul {
+
+            list-style-type: none;
+
+
+
+        }
+
+        #anamenu ul li {
+            width: 24%;
+            border-style: solid;
+            border-width: 3px;
+            border-radius: 5px;
+            background-color: #02095d63;
+            float: left;
+            text-align: center;
+    line-height: 50px;
+        }
+
+        #anamenu ul li a {
+
+            color: beige;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="sayfa">
+        <header id="banner">
+            <div id="logo">
 
-    <h2>Türkiye'nin Kullandığı Uçaklar</h2>
-    <ul>
-        <li><a href="ucak/f-104s.html">F-104S</a></li>
-        <li><a href="ucak/f-100.html">F-100 Super Sabre</a></li>
-        <li><a href="ucak/Supermarine Spitfire.html">Supermarine Spitfire</a></li>
-        <li><a href="ucak/uhurricane.html">Hawker Hurricane</a></li>
-        <li><a href="ucak/mosquito.html">de Havilland Mosquito</a></li>
-        <li><a href="ucak/p47.html">P‑47 Thunderbolt</a></li>
-        <li><a href="ucak/P51.html">P‑51 Mustang</a></li>
-        <li><a href="ucak/f84.html">F‑84 Thunderjet</a></li>
-        <li><a href="ucak/f86.html">F‑86 Sabre</a></li>
-        <li><a href="ucak/f5.html">F‑5 Freedom Fighter / Tiger II</a></li>
-        <li><a href="ucak/f4e.html">F‑4E Phantom II</a></li>
-        <li><a href="ucak/rf4e.html">RF‑4E</a></li>
-        <li><a href="ucak/MirageIII.html">Dassault Mirage III</a></li>
-    </ul>
+        </header>
+
+        <nav id="anamenu">
+            <ul>
+                <li><a href="index.html">Anasayfa</a></li>
+                <li><a href="ucakmenusu.html">Uçaklar</a></li>
+                <li><a href="butonexe.html">Buton Uygulaması</a></li>
+                <li><a href="profil.html">Profil</a></li>
+
+
+            </ul>
+        </nav>
+        <div id="icerik"> 
+            <h1>Türkiye'nin Uçakları</h1>
+            <p>Bu sayfada Türkiye'nin kullandığı uçakların listesi bulunmaktadır. Her bir uçağa tıklayarak detaylı bilgi alabilirsiniz.</p>
+            <br>
+            <h2>Türkiye'nin Kullandığı Uçaklar</h2>
+            <ul>
+                <li><a href="ucak/f-104s.html">F-104S</a></li>
+                <li><a href="ucak/f-100.html">F-100 Super Sabre</a></li>
+                <li><a href="ucak/Supermarine Spitfire.html">Supermarine Spitfire</a></li>
+                <li><a href="ucak/uhurricane.html">Hawker Hurricane</a></li>
+                <li><a href="ucak/mosquito.html">de Havilland Mosquito</a></li>
+                <li><a href="ucak/p47.html">P‑47 Thunderbolt</a></li>
+                <li><a href="ucak/P51.html">P‑51 Mustang</a></li>
+                <li><a href="ucak/f84.html">F‑84 Thunderjet</a></li>
+                <li><a href="ucak/f86.html">F‑86 Sabre</a></li>
+                <li><a href="ucak/f5.html">F‑5 Freedom Fighter / Tiger II</a></li>
+                <li><a href="ucak/f4e.html">F‑4E Phantom II</a></li>
+                <li><a href="ucak/rf4e.html">RF‑4E</a></li>
+                <li><a href="ucak/MirageIII.html">Dassault Mirage III</a></li>
+            </ul>
+        </div>
+    </div>
 </body>
 
 </html>

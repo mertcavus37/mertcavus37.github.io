@@ -10,6 +10,17 @@
       margin: 0;
       padding: 0;
     }
+        body {
+        background-image: url('web sitesi/alev.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        font-family: Arial, sans-serif;
+        min-height: 100vh; /* viewport yüksekliği kadar olsun */
+
+    }
+    
     .menu, .form, .profile {
       display: none;
       padding: 20px;
@@ -39,7 +50,7 @@
     .container {
       max-width: 500px;
       margin: auto;
-      background: white;
+      background: #ffffff17;
       padding: 20px;
       border-radius: 10px;
     }
@@ -47,19 +58,15 @@
 </head>
 <body>
 
-<nav>
-  <button onclick="showPage('menu')">Ana Menü</button>
+<nav style="visibility: hidden;">
   <button onclick="showPage('form')">Form</button>
   <button onclick="showPage('profile')">Profil</button>
 </nav>
 
 <div class="container">
-  <div id="menu" class="menu active">
-    <h2>Hoş Geldin!</h2>
-    <p>Bu sayfada form doldurup profilini görebilirsin. Ancak sayfa yenilenirse bilgiler kaybolur.</p>
-  </div>
 
-  <div id="form" class="form">
+
+  <div id="form" class="form active">
     <h2>Bilgilerini Gir</h2>
     <input type="text" id="name" placeholder="Adın">
     <input type="text" id="age" placeholder="Yaşın">

@@ -14,8 +14,9 @@ background-size: cover;
     background-repeat: no-repeat;
     background-position-y: center;
     background-color: black;
-    height: 100vh;
+    
     margin: 20px;
+    height: 100%;
 }
 
 a{
