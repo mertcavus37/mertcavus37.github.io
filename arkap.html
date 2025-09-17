@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arka Plan Deneme</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body,#app{height:100%}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: #f6f6f6;
+      overflow:hidden;
+      color:#111;
+    }
+
+    .tiles{
+      position:fixed;inset:0;
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(60px, 1fr));
+      grid-auto-rows:60px;
+      gap:4px;
+      z-index:0;
+    }
+
+    .tile{
+      width:100%;height:100%;
+      cursor:pointer;
+      transition:transform .18s, box-shadow .18s, background .18s;
+      background: linear-gradient(180deg, #ffffff 0%, #e5e5e5 100%);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    .tile:hover{
+      transform: translateY(2px) scale(.98);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15), inset 0 4px 10px rgba(0,0,0,0.08);
+      background: linear-gradient(180deg, #e5e5e5 0%, #ffffff 100%);
+      z-index:2;
+    }
+
+    .ui{
+      position:relative;z-index:3;padding:10px;color:#111;background:transparent;display:flex;gap:8px;align-items:center;
+    }
+    .title{font-size:16px;font-weight:700}
+    .subtitle{font-size:12px;opacity:.8}
+  </style>
+</head>
+<body>
+  <div class="ui">
+    <div>
+      <div class="title"></div>
+      <div class="subtitle"></div>
+    </div>
+    <div style="margin-left:auto;font-size:12px;opacity:.9"></div>
+  </div>
+
+  <div id="app" class="tiles"></div>
+
+  <script>
+    const app = document.getElementById('app');
+
+    function buildTiles(){
+      app.innerHTML = '';
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      const colSize = 60; // hücre genişliği
+      const rowSize = 60; // hücre yüksekliği
+      const cols = Math.ceil(vw / (colSize+4));
+      const rows = Math.ceil(vh / (rowSize+4));
+
+      app.style.gridTemplateColumns = `repeat(${cols}, ${colSize}px)`;
+      app.style.gridAutoRows = `${rowSize}px`;
+
+      for(let i=0;i<cols*rows;i++){
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        app.appendChild(tile);
+      }
+    }
+
+    window.addEventListener('resize', buildTiles);
+    buildTiles();
+  </script>
+</body>
+</html>
