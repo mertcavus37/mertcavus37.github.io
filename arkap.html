@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Arka Plan Deneme</title>
+  <title>ARKA PLAN DENEME</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     html,body,#app{height:100%}
@@ -25,17 +25,14 @@
 
     .tile{
       width:100%;height:100%;
-      cursor:pointer;
-      transition:transform .18s, box-shadow .18s, background .18s;
+      transition:background .18s, box-shadow .18s;
       background: linear-gradient(180deg, #ffffff 0%, #e5e5e5 100%);
       box-shadow: 0 2px 4px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
     }
 
-    .tile:hover{
-      transform: translateY(2px) scale(.98);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15), inset 0 4px 10px rgba(0,0,0,0.08);
-      background: linear-gradient(180deg, #e5e5e5 0%, #ffffff 100%);
-      z-index:2;
+    .tile.active{
+      background: #bfbfbf;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
     }
 
     .ui{
@@ -49,7 +46,7 @@
   <div class="ui">
     <div>
       <div class="title"></div>
-      <div class="subtitle"></div>
+      <div class="subtitle">Üzerinden geçince gri olur, hepsi gri olunca sıfırlanır.</div>
     </div>
     <div style="margin-left:auto;font-size:12px;opacity:.9"></div>
   </div>
@@ -64,8 +61,8 @@
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
-      const colSize = 60; // hücre genişliği
-      const rowSize = 60; // hücre yüksekliği
+      const colSize = 60;
+      const rowSize = 60;
       const cols = Math.ceil(vw / (colSize+4));
       const rows = Math.ceil(vh / (rowSize+4));
 
@@ -75,7 +72,25 @@
       for(let i=0;i<cols*rows;i++){
         const tile = document.createElement('div');
         tile.className = 'tile';
+
+        tile.addEventListener('mouseenter', () => {
+          if(!tile.classList.contains('active')){
+            tile.classList.add('active');
+            checkReset();
+          }
+        });
+
         app.appendChild(tile);
+      }
+    }
+
+    function checkReset(){
+      const tiles = document.querySelectorAll('.tile');
+      const allActive = Array.from(tiles).every(t => t.classList.contains('active'));
+      if(allActive){
+        setTimeout(()=>{
+          tiles.forEach(t=>t.classList.remove('active'));
+        }, 500);
       }
     }
 
