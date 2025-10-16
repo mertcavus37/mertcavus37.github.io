@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Auto Clicker Test</title>
+</head>
+<body>
+
+<h2>Test Butonu</h2>
+<button id="panelButton">Tıkla Beni</button>
+
+<br><br>
+<label for="speed">Tıklama Hızı (ms): </label>
+<input type="number" id="speed" value="500">
+<br><br>
+<button id="startBtn">Başlat</button>
+<button id="stopBtn">Durdur</button>
+
+<script>
+let interval;
+
+// Fare tıklaması simülasyonu
+function simulateMouseClick(element) {
+    const eventDown = new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window });
+    element.dispatchEvent(eventDown);
+
+    const eventUp = new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window });
+    element.dispatchEvent(eventUp);
+
+    const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
+    element.dispatchEvent(clickEvent);
+}
+
+// Auto clicker başlat
+document.getElementById('startBtn').addEventListener('click', () => {
+    const speed = parseInt(document.getElementById('speed').value);
+    const element = document.getElementById('panelButton'); // burayı tıklamak istediğin selector ile değiştir
+
+    if(interval) clearInterval(interval);
+    interval = setInterval(() => {
+        simulateMouseClick(element);
+    }, speed);
+});
+
+// Auto clicker durdur
+document.getElementById('stopBtn').addEventListener('click', () => {
+    clearInterval(interval);
+});
+</script>
+
+</body>
+</html>
