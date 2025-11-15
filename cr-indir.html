@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8" />
-<title>Clash Royale PC İndir</title>
+<title>CRBilgisayaraIndir - Clash Royale PC İndir</title>
 <style>
     body {
         background: #0d1117;
@@ -103,9 +103,7 @@
 
 <script>
 function startDownload() {
-    // Butonu gizle
     document.querySelector('.download-btn').style.display = 'none';
-    // Tarama ekranını göster ve başlat
     startScanFake();
 }
 
@@ -127,7 +125,8 @@ function startScanFake() {
     ];
 
     let msgIndex = 0;
-
+    // 60 saniye boyunca %100 tamamlamak için:
+    // 60000 ms / 100 adım = 600 ms per step
     let interval = setInterval(() => {
         progress++;
         scanFill.style.width = progress + "%";
@@ -141,7 +140,7 @@ function startScanFake() {
             clearInterval(interval);
             showPopup();
         }
-    }, 1000);
+    }, 600);
 }
 
 function showPopup() {
