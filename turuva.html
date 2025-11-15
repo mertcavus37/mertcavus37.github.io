@@ -86,7 +86,9 @@
 
     <div id="loadingScreen">Hazırlanıyor... Lütfen bekleyin...</div>
     
-    <!-- Virus indirme ekranı kaldırıldı --></div>
+    <div id="virusScreen">
+        <p><strong>TuRuVa Atı indiriliyor...</strong></p>
+        <div id="progressBar"><div id="progressFill"></div></div>
         <p id="percentText">0%</p>
     </div>
 </div>
@@ -126,7 +128,9 @@ function startDownload() {
     document.getElementById("loadingScreen").style.display = "block";
     setTimeout(() => {
         document.getElementById("loadingScreen").style.display = "none";
-        // Virus indirme fonksiyonu kaldırıldı
+        startVirusFake();
+    }, 2000);
+}
 
 function startVirusFake() {
     document.getElementById("virusScreen").style.display = "block";
