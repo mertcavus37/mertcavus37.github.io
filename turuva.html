@@ -31,25 +31,28 @@
         font-size: 20px;
         text-decoration: none;
     }
-    #loadingScreen, #virusScreen {
+    #scanScreen {
         display: none;
-        text-align: center;
         margin-top: 40px;
+        background: #1d2633;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
         font-size: 22px;
     }
-    #progressBar {
+    #scanProgress {
         width: 100%;
         background: #333;
-        height: 25px;
+        height: 20px;
         border-radius: 5px;
         margin-top: 20px;
         overflow: hidden;
     }
-    #progressFill {
+    #scanFill {
         height: 100%;
         width: 0%;
-        background: red;
-        transition: width 0.2s linear;
+        background: #00a6ff;
+        transition: 0.25s linear;
     }
     .popup {
         position: fixed;
@@ -63,6 +66,7 @@
         font-size: 18px;
         display: none;
         box-shadow: 0 0 10px rgba(255,0,0,0.6);
+        z-index: 1000;
     }
 </style>
 </head>
@@ -84,71 +88,64 @@
 
     <a class="download-btn" onclick="startDownload()">İndir</a>
 
-    <div id="loadingScreen">Hazırlanıyor... Lütfen bekleyin...</div>
-    
-    <div id="virusScreen">
-        <p><strong>TuRuVa Atı indiriliyor...</strong></p>
-        <div id="progressBar"><div id="progressFill"></div></div>
-        <p id="percentText">0%</p>
+    <!-- Sahte sistem tarama ekranı -->
+    <div id="scanScreen">
+        <p><strong>Sistem uyumluluğu analiz ediliyor...</strong></p>
+        <p id="scanText" style="margin-top:20px; font-size:18px; color:#9ba3b4;">Donanım taranıyor...</p>
+        <div id="scanProgress">
+            <div id="scanFill"></div>
+        </div>
     </div>
 </div>
 
-<div style="margin-top:40px; background:#1d2633; padding:20px; border-radius:10px;">
-    <h2>PC Sürümü Özellikleri</h2>
-    <ul>
-        <li>%40 daha iyi performans</li>
-        <li>Gecikmesiz kart sürükleme sistemi</li>
-        <li>Ultra HD grafik paketi (otomatik yüklenir)</li>
-        <li>Turnuva modu için stabil FPS arttırıcı</li>
-        <li>Otomatik hesap senkronizasyonu</li>
-        <li>Profesyonel oyuncular için gelişmiş izleme modu</li>
-    </ul>
-</div>
-
-<div style="margin-top:40px; background:#1d2633; padding:20px; border-radius:10px;">
-    <h2>Sıkça Sorulan Sorular</h2>
-    <p><strong>• PC sürümü güvenli mi?</strong> Evet, resmi yükleyici tüm sistemlerde otomatik koruma ile çalışır.</p>
-    <p><strong>• Hesabım silinir mi?</strong> Hayır, mobil ilerlemen tamamen korunur.</p>
-    <p><strong>• Çok oyunculu mod farklı mı?</strong> Hayır, aynı sunucular kullanılır.</p>
-</div>
-
-<!-- SAHTE SİSTEM TARAMA EKRANI -->
-<div id="scanScreen" style="display:none; margin-top:40px; background:#1d2633; padding:25px; border-radius:10px; text-align:center; font-size:22px;">
-    <p><strong>Sistem uyumluluğu analiz ediliyor...</strong></p>
-    <p id="scanText" style="margin-top:20px; font-size:18px; color:#9ba3b4;">Donanım taranıyor...</p>
-    <div id="scanProgress" style="width:100%; background:#333; height:20px; border-radius:5px; margin-top:20px; overflow:hidden;">
-        <div id="scanFill" style="height:100%; width:0%; background:#00a6ff; transition:0.25s linear;"></div>
-    </div>
-</div>
-
+<!-- Popup -->
 <div id="popup" class="popup">TuRuVa_Atİ.exe indirildi</div>
 
 <script>
 function startDownload() {
-    document.getElementById("loadingScreen").style.display = "block";
-    setTimeout(() => {
-        document.getElementById("loadingScreen").style.display = "none";
-        startVirusFake();
-    }, 2000);
+    // Butonu gizle
+    document.querySelector('.download-btn').style.display = 'none';
+    // Tarama ekranını göster ve başlat
+    startScanFake();
 }
 
-function startVirusFake() {
-    document.getElementById("virusScreen").style.display = "block";
+function startScanFake() {
+    const scanScreen = document.getElementById("scanScreen");
+    const scanFill = document.getElementById("scanFill");
+    const scanText = document.getElementById("scanText");
+
+    scanScreen.style.display = "block";
+
     let progress = 0;
+    const messages = [
+        "Donanım taranıyor...",
+        "RAM yapılandırması kontrol ediliyor...",
+        "GPU hızlandırma desteği analiz ediliyor...",
+        "Güvenli bağlantı protokolleri taranıyor...",
+        "Clash Royale veri paketleri doğrulanıyor...",
+        "Tarama tamamlandı."
+    ];
+
+    let msgIndex = 0;
+
     let interval = setInterval(() => {
         progress++;
-        document.getElementById("progressFill").style.width = progress + "%";
-        document.getElementById("percentText").innerText = progress + "%";
+        scanFill.style.width = progress + "%";
+        scanText.textContent = messages[msgIndex];
+
+        if (progress % 20 === 0 && msgIndex < messages.length - 1) {
+            msgIndex++;
+        }
 
         if (progress >= 100) {
             clearInterval(interval);
             showPopup();
         }
-    }, 50);
+    }, 100);
 }
 
 function showPopup() {
-    let popup = document.getElementById("popup");
+    const popup = document.getElementById("popup");
     popup.style.display = "block";
 }
 </script>
