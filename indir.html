@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İndirme Sitesi</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
+    header { background: #222; color: white; padding: 16px; text-align: center; }
+    .container { max-width: 900px; margin: auto; padding: 20px; }
+    .file-box { background: white; padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #ddd; }
+    .file-box h3 { margin: 0 0 8px 0; }
+    .file-box p { margin: 4px 0; color: #555; }
+    .download-btn { background: #0078ff; color: white; padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; }
+    .download-btn:hover { background: #005fcc; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Basit İndirme Sitesi</h1>
+  </header>
+
+  <div class="container">
+    <div class="file-box">
+      <h3>Program Setup.exe</h3>
+      <p>Boyut: 12 MB</p>
+      <button class="download-btn" onclick="indir('Program-Setup.exe')">İndir</button>
+    </div>
+
+    <div class="file-box">
+      <h3>Resim Paketi.zip</h3>
+      <p>Boyut: 5 MB</p>
+      <button class="download-btn" onclick="indir('Resim-Paketi.zip')">İndir</button>
+    </div>
+
+    <div class="file-box">
+      <h3>Sunum.pptx</h3>
+      <p>Boyut: 2 MB</p>
+      <button class="download-btn" onclick="indir('Sunum.pptx')">İndir</button>
+    </div>
+  </div>
+
+  <script>
+    function indir(dosya) {
+      const data = `Bu bir örnek dosyadır. Dosya adı: ${dosya}`;
+      const blob = new Blob([data], { type: 'application/octet-stream' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = dosya;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 3000);
+    }
+  </script>
+</body>
+</html>
